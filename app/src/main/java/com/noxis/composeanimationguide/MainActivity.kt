@@ -4,19 +4,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.animateInt
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkHorizontally
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -27,7 +22,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -52,13 +46,31 @@ class MainActivity : ComponentActivity() {
                             mutableStateOf(false)
                         }
 
-                        val animatedAlpha by animateFloatAsState(
-                            targetValue = if (visible) 1.0f else 0f,
-                            animationSpec = tween(durationMillis = 1500),
-                            label = "alpha"
+                        var isRound by remember {
+                            mutableStateOf(false)
+                        }
+
+                        val transition = updateTransition(targetState = isRound, label = null)
+
+                        val borderRadius by transition.animateInt(
+                            transitionSpec = { tween(2000) },
+                            label = "border",
+                            targetValueByState = {
+                                if (it) 100 else 0
+                            })
+
+                        val animatedAlpha by transition.animateFloat(
+                            transitionSpec = { tween(1500) },
+                            label = "alpha",
+                            targetValueByState = {
+                                if (it) 1.0f else 0f
+                            }
                         )
 
-                        Button(onClick = { visible = !visible }) {
+                        Button(onClick = {
+                            visible = !visible
+                            isRound = !isRound
+                        }) {
                             Text(text = "Toggle")
                         }
 
@@ -68,7 +80,7 @@ class MainActivity : ComponentActivity() {
                                 .graphicsLayer {
                                     alpha = animatedAlpha
                                 }
-                                .clip(RoundedCornerShape(8.dp))
+                                .clip(RoundedCornerShape(borderRadius))
                                 .background(Color.Green)
                         ) {
 
