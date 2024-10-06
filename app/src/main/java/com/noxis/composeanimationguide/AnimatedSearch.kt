@@ -9,6 +9,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -34,6 +35,9 @@ fun AnimatedSearch() {
         AnimateShapeInfinitely(this)
     }
 
+    // Appears different for dark/light theme colors.
+    val surfaceColor = MaterialTheme.colorScheme.surface
+
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -43,7 +47,7 @@ fun AnimatedSearch() {
             modifier = Modifier
         ) {
             drawArc(
-                color = Color(0xFF302522),
+                color = surfaceColor,
                 startAngle = 45f,
                 sweepAngle = 360f * animateCircle.value,
                 useCenter = false,
@@ -52,7 +56,7 @@ fun AnimatedSearch() {
             )
             // Draw diagonal line in canvas.
             drawLine(
-                color = Color(0xFF302522),
+                color = surfaceColor,
                 strokeWidth = 16f,
                 cap = StrokeCap.Round,
                 start = Offset(
