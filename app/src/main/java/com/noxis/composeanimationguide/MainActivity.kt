@@ -15,9 +15,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ComposeAnimationGuideTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-//                    AnimatedSearch()
-                    PulsatingCircle()
+                Scaffold(modifier = Modifier.fillMaxSize()) { _ ->
+                    AnimatedCirclesAndSearch()
                 }
             }
         }
