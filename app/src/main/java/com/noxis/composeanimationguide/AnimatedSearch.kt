@@ -14,6 +14,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
@@ -27,12 +28,17 @@ fun AnimatedSearch() {
         AnimateShapeInfinitely(this)
     }
 
+// 0.6f for initial value to reduce floating time of line to reach it's final state.
+    // Settings it to 0f -> final animation output looks kind of aggressive movements.
+    val animateLine = remember { Animatable(0.6f) }.apply {
+        AnimateShapeInfinitely(this)
+    }
 
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-
+        // Draw arc in canvas which forms animated circle, repeatable.
         Canvas(
             modifier = Modifier
         ) {
@@ -43,6 +49,20 @@ fun AnimatedSearch() {
                 useCenter = false,
                 size = Size(80f, 80f),
                 style = Stroke(16f, cap = StrokeCap.Round)
+            )
+            // Draw diagonal line in canvas.
+            drawLine(
+                color = Color(0xFF302522),
+                strokeWidth = 16f,
+                cap = StrokeCap.Round,
+                start = Offset(
+                    animateLine.value * 80f,
+                    animateLine.value * 80f
+                ),
+                end = Offset(
+                    animateLine.value * 110f,
+                    animateLine.value * 110f
+                )
             )
         }
     }
