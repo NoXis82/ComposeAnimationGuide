@@ -16,7 +16,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             ComposeAnimationGuideTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    AnimatedSearch()
+//                    AnimatedSearch()
+                    PulsatingCircle()
                 }
             }
         }
