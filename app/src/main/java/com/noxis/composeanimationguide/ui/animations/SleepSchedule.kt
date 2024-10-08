@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.noxis.composeanimationguide.ui.animations.components.TouchMoveControlTrack
 import com.noxis.composeanimationguide.ui.animations.components.VerticalGroupTime
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -46,6 +47,12 @@ fun SleepSchedule() {
                 VerticalGroupTime(isStart = false, startTime, endTime)
             }
             Spacer(modifier = Modifier.padding(28.dp))
+
+            TouchMoveControlTrack(startTime, endTime, { time ->
+                startTime = time
+            }) { time ->
+                endTime = time
+            }
 
         }
     }

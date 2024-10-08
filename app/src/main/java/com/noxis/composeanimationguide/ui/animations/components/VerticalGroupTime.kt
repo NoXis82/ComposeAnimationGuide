@@ -55,16 +55,3 @@ fun VerticalGroupTime(
     }
 
 }
-
-@Composable
-private fun SleepBedTimeIcon(isStart: Boolean, modifier: Modifier = Modifier) {
-    val icon =
-        if (isStart) painterResource(id = R.drawable.ic_bed) else painterResource(id = R.drawable.ic_alarm)
-
-    Icon(
-        painter = icon,
-        contentDescription = null,
-        tint = textSecondary,
-        modifier = modifier
-    )
-}
