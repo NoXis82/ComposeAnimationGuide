@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.noxis.composeanimationguide.ui.animation.GlowingRingLoader
 import com.noxis.composeanimationguide.ui.theme.ComposeAnimationGuideTheme
 
 class MainActivity : ComponentActivity() {
@@ -29,31 +30,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             ComposeAnimationGuideTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(innerPadding)
-                    ) {
-
-                        val transition = rememberInfiniteTransition(label = "")
-                        val color by transition.animateColor(
-                            initialValue = Color.Red,
-                            targetValue = Color.Green,
-                            animationSpec = infiniteRepeatable(
-                                animation = tween(2000),
-                                repeatMode = RepeatMode.Reverse
-                            ),
-                            label = "color"
-                        )
-
-                        Box(
-                            modifier = Modifier
-                                .size(200.dp)
-                                .drawBehind {
-                                    drawRect(color)
-                                }
-                        )
-
+                    Box(modifier = Modifier.padding(innerPadding)) {
+                        GlowingRingLoader()
                     }
                 }
             }
