@@ -15,11 +15,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.noxis.composeanimationguide.ui.animations.SleepSchedule
 import com.noxis.composeanimationguide.ui.theme.ComposeAnimationGuideTheme
 
 class MainActivity : ComponentActivity() {
@@ -29,34 +32,17 @@ class MainActivity : ComponentActivity() {
         setContent {
             ComposeAnimationGuideTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(innerPadding)
-                    ) {
-
-                        val transition = rememberInfiniteTransition(label = "")
-                        val color by transition.animateColor(
-                            initialValue = Color.Red,
-                            targetValue = Color.Green,
-                            animationSpec = infiniteRepeatable(
-                                animation = tween(2000),
-                                repeatMode = RepeatMode.Reverse
-                            ),
-                            label = "color"
-                        )
-
-                        Box(
-                            modifier = Modifier
-                                .size(200.dp)
-                                .drawBehind {
-                                    drawRect(color)
-                                }
-                        )
-
-                    }
+                   Box(Modifier.padding(innerPadding)) {
+                       SleepSchedule()
+                   }
                 }
             }
         }
     }
+}
+
+@Composable
+@Preview
+fun SleepSchedulePreview() {
+    SleepSchedule()
 }
